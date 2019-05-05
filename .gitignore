@@ -5,6 +5,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Builds
+buid/
+dist/
+
 # Runtime data
 pids
 *.pid
@@ -33,6 +37,9 @@ typings/
 # Optional eslint cache
 .eslintcache
 
+# Optional parcell cache
+.cache
+
 # Optional REPL history
 .node_repl_history
 
@@ -44,3 +51,6 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# VSCode project specific settings
+.vscode

@@ -1,0 +1,30 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "prettier"
+  ],
+  "rules": {
+    "max-len": ["error", {"code": 120}],
+    "no-return-assign": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prop-types": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+        "jsx": true
+    },
+    "ecmaVersion": 2018
+  }
+}
