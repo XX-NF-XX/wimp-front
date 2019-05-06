@@ -1,8 +1,8 @@
 const routes = {
-  HOME: '/',
-  LIST: '/list',
-  POST: '/post',
-  SIGN: '/sign',
+  home: '/',
+  list: '/list',
+  post: '/post',
+  sign: '/sign',
 };
 
 export default routes;

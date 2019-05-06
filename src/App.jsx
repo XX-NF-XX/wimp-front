@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 // import TelegramLoginWidget from './components/TelegramLoginWidget';
 import List from './components/list/List';
 
-import ROUTE from './constants/routes';
+import routes from './constants/routes';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Navbar />
         <Switch>
           {/* <Route path={ROUTE.HOME} component={Home} exact /> */}
-          <Route path={ROUTE.LIST} component={List} />
+          <Route path={routes.list} component={List} />
           {/* <Route path={ROUTE.SIGN} component={Signin} /> */}
         </Switch>
       </div>

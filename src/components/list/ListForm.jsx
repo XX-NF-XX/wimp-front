@@ -7,8 +7,8 @@ import Map from '../Map';
 import RangeNumber from '../inputs/RangeNumber';
 
 const defaultLocation = { lat: 49.432, lon: 32.083 };
-const defaultRadius = 300;
-const defaultDays = 7;
+const defaultRadius = 10000;
+const defaultDays = 30;
 
 function ListForm({ searchHandler }) {
   const [location, setLocation] = useState(defaultLocation);
@@ -16,6 +16,7 @@ function ListForm({ searchHandler }) {
   const [days, setDays] = useState(defaultDays);
 
   const [collapse, setCollapse] = useState(true);
+  const [search, setSearch] = useState(null);
 
   function toggleCollapse() {
     setCollapse(!collapse);
@@ -28,8 +29,15 @@ function ListForm({ searchHandler }) {
   function onSearch() {
     if (!collapse) return;
 
-    searchHandler({ location, radius, days });
+    setSearch({ location, radius, days });
     toggleCollapse();
+  }
+
+  function sendSearch() {
+    if (!search) return;
+
+    searchHandler(search);
+    setSearch(null);
   }
 
   return (
@@ -44,7 +52,7 @@ function ListForm({ searchHandler }) {
           <p className='h4 text-center'>Search posts</p>
         </Col>
       </Row>
-      <Collapse isOpen={collapse}>
+      <Collapse isOpen={collapse} onExited={sendSearch}>
         <Form>
           <FormGroup row>
             <Col sm='6'>
