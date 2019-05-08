@@ -29,9 +29,9 @@ function Posts({ location, radius, days }) {
     }
 
     const cards = posts.map(post => {
-      const { id, username: name, userPlatform, creationDate, lon, lat, ...rest } = post;
+      const { id, username: name, userPlatform, created: createdMs, lon, lat, ...rest } = post;
       const created = new Date();
-      created.setTime(creationDate);
+      created.setTime(createdMs);
 
       const cardProps = {
         user: {
