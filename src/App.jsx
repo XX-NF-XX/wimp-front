@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 import Navbar from './components/Navbar';
-// import TelegramLoginWidget from './components/TelegramLoginWidget';
 import List from './components/list/List';
+import CreatePost from './components/CreatePost';
 
 import routes from './constants/routes';
 
@@ -12,9 +13,10 @@ function App() {
       <div>
         <Navbar />
         <Switch>
-          {/* <Route path={ROUTE.HOME} component={Home} exact /> */}
+          {/* <Route path={routes.home} component={Home} exact /> */}
           <Route path={routes.list} component={List} />
-          {/* <Route path={ROUTE.SIGN} component={Signin} /> */}
+          <Route path={routes.post} component={CreatePost} />
+          {/* <Route path={routes.help} component={Help} /> */}
         </Switch>
       </div>
     </BrowserRouter>
