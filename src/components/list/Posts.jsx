@@ -1,26 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Alert, Spinner } from 'reactstrap';
+import { Col, Alert } from 'reactstrap';
 
 import PostCard from './PostCard';
 
-function Posts({ location, radius, days }) {
-  const [posts, setPosts] = useState(null);
-
-  useEffect(() => {
-    setPosts(null);
-
-    const query = `?d=${days}&r=${radius}&lon=${location.lon}&lat=${location.lat}`;
-    const url = `http://geek-med.tk:3030/api/v1/requests/list${query}`;
-
-    fetch(url, { method: 'GET', mode: 'cors', credentials: 'same-origin' })
-      .then(response => response.json())
-      .then(json => setPosts(json.requests))
-      .catch(reject => console.error(reject)); // TODO: show toast
-  }, [days, location, radius]);
-
+function Posts({ posts }) {
   function showPostCards() {
-    if (posts && posts.length <= 0) {
+    if (posts.length <= 0) {
       return (
         <Alert className='md' color='primary'>
           No posts found. Try expanding the range and/or increasing the amount of days.
@@ -56,16 +42,12 @@ function Posts({ location, radius, days }) {
     );
   }
 
-  return <div className='d-flex justify-content-center'>{!posts ? <Spinner color='primary' /> : showPostCards()}</div>;
+  return <div className='d-flex justify-content-center'>{showPostCards()}</div>;
 }
 
 Posts.propTypes = {
-  location: PropTypes.shape({
-    lon: PropTypes.number.isRequired,
-    lat: PropTypes.number.isRequired,
-  }).isRequired,
-  radius: PropTypes.number.isRequired,
-  days: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  posts: PropTypes.array.isRequired,
 };
 
 export default Posts;

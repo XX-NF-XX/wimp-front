@@ -4,12 +4,12 @@ import Form from './ListForm';
 import Posts from './Posts';
 
 function List() {
-  const [search, setSearch] = useState(null);
+  const [searchResults, setSearchResults] = useState(null);
 
   return (
-    <div className='container'>
-      <Form searchHandler={setSearch} />
-      {search != null ? <Posts {...search} /> : <div />}
+    <div className='container pt-2'>
+      <Form resultHandler={setSearchResults} isCollapsed />
+      {searchResults != null ? <Posts posts={searchResults} /> : <div />}
     </div>
   );
 }

@@ -4,40 +4,39 @@ import PropTypes from 'prop-types';
 import { Form, FormGroup, Col, Input, Button, Collapse, Row } from 'reactstrap';
 
 import Map from '../Map';
+import { getPosts } from '../../helpers/fetcher';
 import RangeNumber from '../inputs/RangeNumber';
 
 const defaultLocation = { lat: 49.432, lon: 32.083 };
-const defaultRadius = 10000;
-const defaultDays = 30;
+const defaultRadius = 1000;
+const defaultDays = 10;
 
-function ListForm({ searchHandler }) {
+function ListForm({ resultHandler }) {
   const [location, setLocation] = useState(defaultLocation);
   const [radius, setRadius] = useState(defaultRadius);
   const [days, setDays] = useState(defaultDays);
 
-  const [collapse, setCollapse] = useState(true);
-  const [search, setSearch] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   function toggleCollapse() {
-    setCollapse(!collapse);
+    setIsCollapsed(!isCollapsed);
   }
 
-  function getToggleLabel() {
-    return collapse ? 'Hide ' : 'Show';
+  function onSearchResult(requests) {
+    setIsSearching(false);
+
+    if (requests.length > 0) toggleCollapse();
+
+    resultHandler(requests);
   }
 
   function onSearch() {
-    if (!collapse) return;
+    setIsSearching(true);
 
-    setSearch({ location, radius, days });
-    toggleCollapse();
-  }
-
-  function sendSearch() {
-    if (!search) return;
-
-    searchHandler(search);
-    setSearch(null);
+    getPosts({ radius, days, location })
+      .then(payload => onSearchResult(payload.requests))
+      .catch(reject => console.error(reject)); // TODO: show toast
   }
 
   return (
@@ -45,14 +44,14 @@ function ListForm({ searchHandler }) {
       <Row>
         <Col sm='1'>
           <Button color='secondary' size='sm' onClick={toggleCollapse}>
-            {getToggleLabel()}
+            {isCollapsed ? 'Show' : 'Hide '}
           </Button>
         </Col>
         <Col sm='10'>
           <p className='h4 text-center'>Search posts</p>
         </Col>
       </Row>
-      <Collapse isOpen={collapse} onExited={sendSearch}>
+      <Collapse isOpen={!isCollapsed}>
         <Form>
           <FormGroup row>
             <Col sm='6'>
@@ -76,7 +75,15 @@ function ListForm({ searchHandler }) {
           </FormGroup>
           <Input name='lon' value={location.lon} readOnly hidden />
           <Input name='lat' value={location.lat} readOnly hidden />
-          <Button onClick={onSearch}>Search</Button>
+          <Button onClick={onSearch} disabled={isSearching}>
+            <span
+              className='spinner-border spinner-border-sm mr-2'
+              role='status'
+              aria-hidden='true'
+              hidden={!isSearching}
+            />
+            {isSearching ? 'Searching...' : 'Search'}
+          </Button>
         </Form>
       </Collapse>
     </div>
@@ -84,7 +91,7 @@ function ListForm({ searchHandler }) {
 }
 
 ListForm.propTypes = {
-  searchHandler: PropTypes.func.isRequired,
+  resultHandler: PropTypes.func.isRequired,
 };
 
 export default ListForm;
