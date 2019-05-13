@@ -3,6 +3,7 @@ const routes = {
   list: '/list',
   post: '/post',
   sign: '/sign',
+  help: '/help',
 };
 
 export default routes;
