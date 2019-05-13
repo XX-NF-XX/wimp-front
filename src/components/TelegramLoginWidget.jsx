@@ -1,39 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function TelegramLoginWidget() {
+function TelegramLoginButton({ children, className, botName, onAuth }) {
+  const [instance, setInstance] = useState(null);
+
   useEffect(() => {
-    const { telegramLogin, size, userpic = true, radius = null, requestAccess = null, onTelegramAuth } = this.props;
+    if (!instance) return;
 
-    // window.TelegramLoginWidget = {
-    //   dataOnauth: (user) => dataOnauth(user),
-    // };
+    if (instance.children.length > 0) return;
+
+    window.TelegramLoginWidget = {
+      dataOnAuth: user => onAuth(user),
+    };
 
     const script = document.createElement('script');
     script.src = 'https://telegram.org/js/telegram-widget.js?5';
-    script.setAttribute('data-telegram-login', telegramLogin);
-    script.setAttribute('data-size', size);
+    script.setAttribute('data-telegram-login', botName);
+    script.setAttribute('data-size', 'large'); // Size of the button
+    script.setAttribute('data-radius', '4'); // Corners of the button
+    script.setAttribute('data-request-access', 'write');
+    script.setAttribute('data-userpic', 'true');
 
-    if (!userpic) script.setAttribute('data-userpic', !!userpic);
-
-    if (radius != null) script.setAttribute('data-radius', radius);
-
-    if (requestAccess) script.setAttribute('data-request-access', 'write');
-
-    script.setAttribute('data-onauth', 'TelegramLoginWidget.onTelegramAuth(user)');
+    script.setAttribute('data-onauth', 'TelegramLoginWidget.dataOnAuth(user)');
     script.async = true;
-    this.instance.appendChild(script);
+
+    if (instance) instance.appendChild(script);
   });
 
   return (
-    <div
-      className={this.props.className}
-      ref={component => {
-        this.instance = component;
-      }}
-    >
-      {this.props.children}
+    <div className={className} ref={component => setInstance(component)}>
+      {children}
     </div>
   );
 }
 
-export default TelegramLoginWidget;
+export default TelegramLoginButton;
