@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 function TelegramLoginButton({ children, className, botName, onAuth }) {
   const [instance, setInstance] = useState(null);
@@ -32,5 +33,16 @@ function TelegramLoginButton({ children, className, botName, onAuth }) {
     </div>
   );
 }
+
+TelegramLoginButton.propTypes = {
+  children: PropTypes.element,
+  className: PropTypes.string.isRequired,
+  botName: PropTypes.string.isRequired,
+  onAuth: PropTypes.func.isRequired,
+};
+
+TelegramLoginButton.defaultProps = {
+  children: undefined,
+};
 
 export default TelegramLoginButton;
