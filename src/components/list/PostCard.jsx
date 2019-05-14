@@ -14,17 +14,17 @@ function PostCard({ type, message, photoURL, created, user, location }) {
     <div className='p-2'>
       <Card>
         <CardHeader className='text-center'>{getHeader()}</CardHeader>
-        <Row className='no-gutters'>
-          <Col md={6} className='p-2 thumbnail'>
-            <a href={photoURL} target='_blank' rel='noopener noreferrer'>
-              <CardImg src={photoURL} />
-            </a>
-          </Col>
-          <Col md={6} className='pl-2 pr-2 py-2'>
-            <Map draggable={false} location={location} />
-          </Col>
-        </Row>
         <CardBody>
+          <Row className='no-gutters'>
+            <Col md={6} className='p-2 thumbnail'>
+              <a href={photoURL} target='_blank' rel='noopener noreferrer'>
+                <CardImg src={photoURL} className='image-responsive' />
+              </a>
+            </Col>
+            <Col md={6} className='p-2'>
+              <Map draggable={false} location={location} />
+            </Col>
+          </Row>
           <CardText>{message.toString()}</CardText>
           <CardText>{`By: ${user.name.toString()}`}</CardText>
           <CardText>{`From: ${user.platform.toString()}`}</CardText>

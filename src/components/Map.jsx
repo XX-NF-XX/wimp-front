@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Circle, Map, TileLayer, Marker } from 'react-leaflet';
 
 function MapStatic(props) {
-  const { location, defaultZoom, radius, draggable, locationHandler } = props;
+  const { location, defaultZoom, radius, draggable, locationHandler, height } = props;
 
   const [marker, setMarker] = useState(location);
   const [zoom, setZoom] = useState(defaultZoom);
@@ -20,7 +20,7 @@ function MapStatic(props) {
   };
 
   return (
-    <Map center={location} zoom={zoom} onZoomend={updateZoom}>
+    <Map center={location} zoom={zoom} onZoomend={updateZoom} style={{ height }}>
       <TileLayer
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -40,6 +40,7 @@ MapStatic.propTypes = {
   radius: PropTypes.number,
   draggable: PropTypes.bool,
   locationHandler: PropTypes.func,
+  height: PropTypes.string,
 };
 
 MapStatic.defaultProps = {
@@ -47,6 +48,7 @@ MapStatic.defaultProps = {
   radius: 0,
   draggable: true,
   locationHandler: () => {},
+  height: '400px',
 };
 
 export default MapStatic;
