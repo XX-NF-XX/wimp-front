@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -9,16 +9,19 @@ import CustomModal from './CustomModal';
 
 import { createPost } from '../helpers/fetcher';
 import { isRegistered } from '../helpers/guardian';
-
-const defaultLocation = { lat: 49.432, lon: 32.083 };
+import { getLocation, getDefaultLocation } from '../helpers/location';
 
 function CreatePost({ history }) {
   if (!isRegistered()) history.push('/home');
 
-  const [location, setLocation] = useState(defaultLocation);
+  const [location, setLocation] = useState(getDefaultLocation());
   const [modalTextProps, setModalTextProps] = useState({});
   const [isResultOpen, setResultOpen] = useState(false);
   const [isSubmitDisabled, setSubmitDisabled] = useState(false);
+
+  useEffect(() => {
+    getLocation(position => setLocation(position));
+  }, []);
 
   function onResultClosed() {
     history.push('/home');
@@ -55,7 +58,7 @@ ID of the request: ${json.request}`;
           <Input id='lat' name='lat' type='hidden' value={location.lat} />
         </FormGroup>
         <FormGroup>
-          <Label for='message'>Description of your pet</Label>
+          <Label for='message'>Describe your pet</Label>
           <Input type='textarea' name='msg' id='message' maxLength='1000' minLength='20' rows='5' required />
           <FormText color='muted'>Any information that can help others to find your pet</FormText>
         </FormGroup>

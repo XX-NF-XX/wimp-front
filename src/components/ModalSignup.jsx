@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import Map from './Map';
 
 import { signup as fetcherSignup } from '../helpers/fetcher';
-
-const defaultLocation = { lat: 49.432, lon: 32.083 };
+import { getLocation, getDefaultLocation } from '../helpers/location';
 
 function ModalSignup({ isOpen, handleOpen }) {
   const [isModalOpen, setModalOpen] = useState(isOpen);
-  const [location, setLocation] = useState(defaultLocation);
+  const [location, setLocation] = useState(getDefaultLocation());
   const [isSending, setSending] = useState(false);
+
+  useEffect(() => {
+    getLocation(position => setLocation(position));
+  }, []);
 
   useEffect(() => {
     if (isOpen !== isModalOpen) setModalOpen(isOpen);
@@ -59,5 +63,10 @@ function ModalSignup({ isOpen, handleOpen }) {
     </div>
   );
 }
+
+ModalSignup.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  handleOpen: PropTypes.func.isRequired,
+};
 
 export default ModalSignup;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Form, FormGroup, Col, Input, Button, Collapse, Row } from 'reactstrap';
@@ -6,18 +6,22 @@ import { Form, FormGroup, Col, Input, Button, Collapse, Row } from 'reactstrap';
 import Map from '../Map';
 import { getPosts } from '../../helpers/fetcher';
 import RangeNumber from '../inputs/RangeNumber';
+import { getLocation, getDefaultLocation } from '../../helpers/location';
 
-const defaultLocation = { lat: 49.432, lon: 32.083 };
 const defaultRadius = 1000;
 const defaultDays = 10;
 
 function ListForm({ resultHandler }) {
-  const [location, setLocation] = useState(defaultLocation);
+  const [location, setLocation] = useState(getDefaultLocation());
   const [radius, setRadius] = useState(defaultRadius);
   const [days, setDays] = useState(defaultDays);
 
   const [isSearching, setIsSearching] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  useEffect(() => {
+    getLocation(position => setLocation(position));
+  }, []);
 
   function toggleCollapse() {
     setIsCollapsed(!isCollapsed);
@@ -27,6 +31,12 @@ function ListForm({ resultHandler }) {
     setIsSearching(false);
 
     if (requests.length > 0) toggleCollapse();
+
+    if (requests.length > 1) {
+      requests.sort((first, second) => {
+        return second.created - first.created;
+      });
+    }
 
     resultHandler(requests);
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Circle, Map, TileLayer, Marker } from 'react-leaflet';
@@ -9,10 +9,14 @@ function MapStatic(props) {
   const [marker, setMarker] = useState(location);
   const [zoom, setZoom] = useState(defaultZoom);
 
+  useEffect(() => {
+    const { lon: lng, lat } = location;
+    setMarker({ lng, lat });
+  }, [location]);
+
   const updatePosition = e => {
-    const position = e.target.getLatLng();
-    setMarker(position);
-    locationHandler({ lon: position.lng, lat: position.lat });
+    const { lng: lon, lat } = e.target.getLatLng();
+    locationHandler({ lon, lat });
   };
 
   const updateZoom = e => {
