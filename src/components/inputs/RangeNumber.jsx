@@ -46,7 +46,7 @@ function RangeNumber(props) {
             step={step}
             value={value}
             onChange={onValueChange}
-            className='custom-range border-0'
+            className='custom-range border-0 pt-4'
           />
         </Col>
       </FormGroup>

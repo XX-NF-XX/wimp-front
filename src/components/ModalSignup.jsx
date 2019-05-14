@@ -40,18 +40,18 @@ function ModalSignup({ isOpen, handleOpen }) {
   return (
     <div>
       <Modal isOpen={isModalOpen} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Select your location</ModalHeader>
+        <ModalHeader toggle={toggle}>Choose your location</ModalHeader>
         <ModalBody>
           <Map draggable locationHandler={setLocation} radius={0} location={location} />
-          <p className='text-secondary'>You can drag and drop blue marker to set a location</p>
+          <p className='text-secondary pt-2'>You can drag and drop blue marker to set a location.</p>
         </ModalBody>
         <ModalFooter>
-          <Button color='primary' onClick={signup} disabled={!isSending}>
+          <Button color='primary' onClick={signup} disabled={isSending}>
             <span
               className='spinner-border spinner-border-sm mr-2'
               role='status'
               aria-hidden='true'
-              hidden={isSending}
+              hidden={!isSending}
             />
             {isSending ? 'Sending...' : 'Sign up'}
           </Button>
