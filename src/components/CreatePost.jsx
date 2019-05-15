@@ -10,6 +10,7 @@ import CustomModal from './CustomModal';
 import { createPost } from '../helpers/fetcher';
 import { isRegistered } from '../helpers/guardian';
 import { getLocation, getDefaultLocation } from '../helpers/location';
+import translation from '../constants/translation';
 
 function CreatePost({ history }) {
   if (!isRegistered()) history.push('/home');
@@ -28,11 +29,8 @@ function CreatePost({ history }) {
   }
 
   function afterSubmit(json) {
-    const title = 'Request status';
-    const message = `
-Your request is awaiting moderation.
-WIMP bot will notify you when the process is complete.
-ID of the request: ${json.request}`;
+    const title = translation.post.submittedTitle;
+    const message = `${translation.post.submittedDescription} ${json.request}`;
 
     setModalTextProps({ title, message: message.trim() });
     setResultOpen(true);
@@ -51,21 +49,22 @@ ID of the request: ${json.request}`;
     <div className='container'>
       <CustomModal isOpen={isResultOpen} onClosed={onResultClosed} {...modalTextProps} />
       <Form onSubmit={onSubmit}>
+        <p className='h4 text-center py-2'>{translation.post.title}</p>
         <FormGroup>
           <Map draggable locationHandler={setLocation} radius={0} location={location} />
-          <FormText color='muted'>Location, where you have seen your pet the last time</FormText>
+          <FormText color='muted'>{translation.post.mapHint}</FormText>
           <Input id='lon' name='lon' type='hidden' value={location.lon} />
           <Input id='lat' name='lat' type='hidden' value={location.lat} />
         </FormGroup>
         <FormGroup>
-          <Label for='message'>Describe your pet</Label>
+          <Label for='message'>{translation.post.description}</Label>
           <Input type='textarea' name='msg' id='message' maxLength='1000' minLength='20' rows='5' required />
-          <FormText color='muted'>Any information that can help others to find your pet</FormText>
+          <FormText color='muted'>{translation.post.descriptionHint}</FormText>
         </FormGroup>
         <FormGroup>
-          <Label for='photo'>Photo of your pet</Label>
+          <Label for='photo'>{translation.post.photo}</Label>
           <Input type='file' name='photo' id='photo' accept='image/*' required />
-          <FormText color='muted'>The file size limit is 10Mb.</FormText>
+          <FormText color='muted'>{translation.post.photoHint}</FormText>
         </FormGroup>
         <Button type='submit' disabled={isSubmitDisabled}>
           <span
@@ -74,7 +73,7 @@ ID of the request: ${json.request}`;
             aria-hidden='true'
             hidden={!isSubmitDisabled}
           />
-          {isSubmitDisabled ? 'Sending...' : 'Submit'}
+          {isSubmitDisabled ? translation.status.sending : translation.status.send}
         </Button>
       </Form>
     </div>

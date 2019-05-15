@@ -29,7 +29,7 @@ function PostCard({ type, message, photoURL, created, user, location }) {
           <CardText>{`By: ${user.name.toString()}`}</CardText>
           <CardText>{`From: ${user.platform.toString()}`}</CardText>
           <CardText>
-            <small className='text-muted'>{`created: ${created.toLocaleString()}`}</small>
+            <small className='text-muted'>{`${translation.list.created}: ${created.toLocaleString()}`}</small>
           </CardText>
         </CardBody>
       </Card>

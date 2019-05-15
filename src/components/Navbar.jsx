@@ -22,6 +22,7 @@ import TelegramLogin from './TelegramLoginWidget';
 
 import { logOut, isRegistered } from '../helpers/guardian';
 import { signin } from '../helpers/fetcher';
+import translation from '../constants/translation';
 
 function AppNavbar({ history }) {
   const [isSigninOpen, setSigninOpen] = useState(false);
@@ -52,7 +53,7 @@ function AppNavbar({ history }) {
     return (
       <NavItem>
         <NavLink tag={Link} to='/post'>
-          Create request
+          {translation.route.create}
         </NavLink>
       </NavItem>
     );
@@ -63,7 +64,7 @@ function AppNavbar({ history }) {
       return (
         <NavItem>
           <NavLink onClick={logOut} tag={Link} to='/'>
-            Log out
+            {translation.profile.logout}
           </NavLink>
         </NavItem>
       );
@@ -72,10 +73,10 @@ function AppNavbar({ history }) {
     return (
       <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav caret>
-          Log in
+          {translation.profile.login}
         </DropdownToggle>
         <DropdownMenu right>
-          <DropdownItem header>Select a service to log in</DropdownItem>
+          <DropdownItem header>{translation.profile.loginHint}</DropdownItem>
           <TelegramLogin className='container' botName='wimp_web_test_bot' onAuth={onAuth} />
         </DropdownMenu>
       </UncontrolledDropdown>
@@ -96,18 +97,18 @@ function AppNavbar({ history }) {
           <Nav className='ml-auto' navbar>
             <NavItem>
               <NavLink tag={Link} to='/'>
-                Home
+                {translation.route.home}
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to='/list'>
-                List
+                {translation.route.list}
               </NavLink>
             </NavItem>
             {createPost()}
             <NavItem>
               <NavLink tag={Link} to='/help'>
-                Help
+                {translation.route.help}
               </NavLink>
             </NavItem>
             {logInOut()}

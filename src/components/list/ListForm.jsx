@@ -7,6 +7,7 @@ import Map from '../Map';
 import { getPosts } from '../../helpers/fetcher';
 import RangeNumber from '../inputs/RangeNumber';
 import { getLocation, getDefaultLocation } from '../../helpers/location';
+import translation from '../../constants/translation';
 
 const defaultRadius = 1000;
 const defaultDays = 10;
@@ -54,26 +55,34 @@ function ListForm({ resultHandler }) {
       <Row>
         <Col sm='1'>
           <Button color='secondary' size='sm' onClick={toggleCollapse}>
-            {isCollapsed ? 'Show' : 'Hide '}
+            {isCollapsed ? translation.status.show : translation.status.hide}
           </Button>
         </Col>
         <Col sm='10'>
-          <p className='h4 text-center'>Search posts</p>
+          <p className='h4 text-center'>{translation.list.title}</p>
         </Col>
       </Row>
       <Collapse isOpen={!isCollapsed}>
         <Form>
           <FormGroup row>
             <Col sm='6'>
-              <RangeNumber min={1} max={30} name='d' label='Age' append='days' defaultValue={days} setValue={setDays} />
+              <RangeNumber
+                min={1}
+                max={30}
+                name='d'
+                label={translation.list.age}
+                append={translation.list.days}
+                defaultValue={days}
+                setValue={setDays}
+              />
             </Col>
             <Col sm='6'>
               <RangeNumber
                 min={50}
                 max={10000}
                 name='r'
-                label='Radius'
-                append='meters'
+                label={translation.list.radius}
+                append={translation.list.meters}
                 step={50}
                 defaultValue={radius}
                 setValue={setRadius}
@@ -92,7 +101,7 @@ function ListForm({ resultHandler }) {
               aria-hidden='true'
               hidden={!isSearching}
             />
-            {isSearching ? 'Searching...' : 'Search'}
+            {isSearching ? translation.status.searching : translation.status.search}
           </Button>
         </Form>
       </Collapse>

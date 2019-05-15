@@ -7,6 +7,8 @@ import Map from './Map';
 import { signup as fetcherSignup } from '../helpers/fetcher';
 import { getLocation, getDefaultLocation } from '../helpers/location';
 
+import translation from '../constants/translation';
+
 function ModalSignup({ isOpen, handleOpen }) {
   const [isModalOpen, setModalOpen] = useState(isOpen);
   const [location, setLocation] = useState(getDefaultLocation());
@@ -40,10 +42,10 @@ function ModalSignup({ isOpen, handleOpen }) {
   return (
     <div>
       <Modal isOpen={isModalOpen} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Choose your location</ModalHeader>
+        <ModalHeader toggle={toggle}>{translation.signup.map}</ModalHeader>
         <ModalBody>
           <Map draggable locationHandler={setLocation} radius={0} location={location} />
-          <p className='text-secondary pt-2'>You can drag and drop blue marker to set a location.</p>
+          <p className='text-secondary pt-2'>{translation.signup.mapDescription}</p>
         </ModalBody>
         <ModalFooter>
           <Button color='primary' onClick={signup} disabled={isSending}>
@@ -53,10 +55,10 @@ function ModalSignup({ isOpen, handleOpen }) {
               aria-hidden='true'
               hidden={!isSending}
             />
-            {isSending ? 'Sending...' : 'Sign up'}
+            {isSending ? translation.status.sending : translation.profile.signup}
           </Button>
           <Button color='secondary' onClick={toggle}>
-            Cancel
+            {translation.status.cancel}
           </Button>
         </ModalFooter>
       </Modal>

@@ -4,12 +4,14 @@ import { Col, Alert } from 'reactstrap';
 
 import PostCard from './PostCard';
 
+import translation from '../../constants/translation';
+
 function Posts({ posts }) {
   function showPostCards() {
     if (posts.length <= 0) {
       return (
         <Alert className='md' color='primary'>
-          No posts found. Try expanding the range and/or increasing the amount of days.
+          {translation.list.notFound}
         </Alert>
       );
     }
