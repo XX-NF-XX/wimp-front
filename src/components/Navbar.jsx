@@ -15,6 +15,8 @@ import {
 } from 'reactstrap';
 import { Link, withRouter } from 'react-router-dom';
 
+import logo from '../../public/logo_nav.png';
+
 import ModalSignup from './ModalSignup';
 import TelegramLogin from './TelegramLoginWidget';
 
@@ -85,9 +87,9 @@ function AppNavbar({ history }) {
       <div>
         <ModalSignup isOpen={isSigninOpen} handleOpen={setSigninOpen} />
       </div>
-      <Navbar color='light' light expand='md'>
-        <NavbarBrand tag={Link} to='/'>
-          WIMP
+      <Navbar color='light' light expand='sm'>
+        <NavbarBrand tag={Link} className='p-0' to='/'>
+          <img src={logo} className='responsive' height='auto' width='100%' alt='WIMP logo' />
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isNavbarOpen} navbar>
