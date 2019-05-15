@@ -38,7 +38,7 @@ function RangeNumber(props) {
             <InputGroupAddon addonType='append'>{append.toString()}</InputGroupAddon>
           </InputGroup>
         </Col>
-        <Col>
+        <Col className='pt-2'>
           <Input
             type='range'
             min={min}
@@ -46,7 +46,7 @@ function RangeNumber(props) {
             step={step}
             value={value}
             onChange={onValueChange}
-            className='custom-range border-0 pt-4'
+            className='custom-range border-0 align-self-center'
           />
         </Col>
       </FormGroup>
