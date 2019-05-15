@@ -26,8 +26,8 @@ function PostCard({ type, message, photoURL, created, user, location }) {
             </Col>
           </Row>
           <CardText>{message.toString()}</CardText>
-          <CardText>{`By: ${user.name.toString()}`}</CardText>
-          <CardText>{`From: ${user.platform.toString()}`}</CardText>
+          <CardText>{`${translation.list.by}: ${user.name.toString()}`}</CardText>
+          <CardText>{`${translation.list.platform}: ${user.platform.toString()}`}</CardText>
           <CardText>
             <small className='text-muted'>{`${translation.list.created}: ${created.toLocaleString()}`}</small>
           </CardText>
