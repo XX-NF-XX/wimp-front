@@ -53,12 +53,12 @@ function ListForm({ resultHandler }) {
   return (
     <div>
       <Row>
-        <Col sm='1'>
+        <Col xs='3'>
           <Button color='secondary' size='sm' onClick={toggleCollapse}>
             {isCollapsed ? translation.status.show : translation.status.hide}
           </Button>
         </Col>
-        <Col sm='10'>
+        <Col xs='6'>
           <p className='h4 text-center'>{translation.list.title}</p>
         </Col>
       </Row>

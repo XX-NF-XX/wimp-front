@@ -15,13 +15,15 @@ import {
 } from 'reactstrap';
 import { Link, withRouter } from 'react-router-dom';
 
-import logo from '../../public/logo_nav.png';
-
 import ModalSignup from './ModalSignup';
 import TelegramLogin from './TelegramLoginWidget';
 
+import logo from '../../public/logo_nav.png';
+
 import { logOut, isRegistered } from '../helpers/guardian';
 import { signin } from '../helpers/fetcher';
+
+import routes from '../constants/routes';
 import translation from '../constants/translation';
 
 function AppNavbar({ history }) {
@@ -34,7 +36,7 @@ function AppNavbar({ history }) {
 
   function afterAuth({ registered }) {
     if (registered) {
-      history.push('/home');
+      history.push(routes.home);
       return;
     }
 
@@ -52,7 +54,7 @@ function AppNavbar({ history }) {
 
     return (
       <NavItem>
-        <NavLink tag={Link} to='/post'>
+        <NavLink tag={Link} to={routes.post}>
           {translation.route.create}
         </NavLink>
       </NavItem>
@@ -62,8 +64,8 @@ function AppNavbar({ history }) {
   function logInOut() {
     if (isRegistered()) {
       return (
-        <NavItem>
-          <NavLink onClick={logOut} tag={Link} to='/'>
+        <NavItem className='pl-4'>
+          <NavLink onClick={logOut} tag={Link} to={routes.home}>
             {translation.profile.logout}
           </NavLink>
         </NavItem>
@@ -71,7 +73,7 @@ function AppNavbar({ history }) {
     }
 
     return (
-      <UncontrolledDropdown nav inNavbar>
+      <UncontrolledDropdown nav inNavbar className='pl-4'>
         <DropdownToggle nav caret>
           {translation.profile.login}
         </DropdownToggle>
@@ -89,28 +91,28 @@ function AppNavbar({ history }) {
         <ModalSignup isOpen={isSigninOpen} handleOpen={setSigninOpen} />
       </div>
       <Navbar color='light' light expand='sm'>
-        <NavbarBrand tag={Link} className='p-0' to='/'>
-          <img src={logo} className='responsive' height='auto' width='100%' alt='WIMP logo' />
+        <NavbarBrand tag={Link} className='p-0' to={routes.home}>
+          <img src={logo} className='responsive' height='auto' width='100%' alt='WIMP' />
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isNavbarOpen} navbar>
           <Nav className='ml-auto' navbar>
             <NavItem>
-              <NavLink tag={Link} to='/'>
+              <NavLink tag={Link} to={routes.home}>
                 {translation.route.home}
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to='/list'>
+              <NavLink tag={Link} to={routes.list}>
                 {translation.route.list}
               </NavLink>
             </NavItem>
             {createPost()}
-            <NavItem>
-              <NavLink tag={Link} to='/help'>
+            {/* <NavItem>
+              <NavLink tag={Link} to={routes.help}>
                 {translation.route.help}
               </NavLink>
-            </NavItem>
+            </NavItem> */}
             {logInOut()}
           </Nav>
         </Collapse>

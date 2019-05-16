@@ -10,10 +10,12 @@ import CustomModal from './CustomModal';
 import { createPost } from '../helpers/fetcher';
 import { isRegistered } from '../helpers/guardian';
 import { getLocation, getDefaultLocation } from '../helpers/location';
+
+import routes from '../constants/routes';
 import translation from '../constants/translation';
 
 function CreatePost({ history }) {
-  if (!isRegistered()) history.push('/home');
+  if (!isRegistered()) history.push(routes.home);
 
   const [location, setLocation] = useState(getDefaultLocation());
   const [modalTextProps, setModalTextProps] = useState({});
@@ -25,7 +27,7 @@ function CreatePost({ history }) {
   }, []);
 
   function onResultClosed() {
-    history.push('/home');
+    history.push(routes.home);
   }
 
   function afterSubmit(json) {
